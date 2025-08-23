@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "329569516510",
+    "project_id": "pixora-845b7",
+    "storage_bucket": "pixora-845b7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329569516510:android:39fe3286d3e29e4311fb4f",
+        "android_client_info": {
+          "package_name": "com.example.pixora"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnAJoof8kDSQXRl0dG_qpVVBu7cgvnkRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
