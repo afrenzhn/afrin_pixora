@@ -21,7 +21,7 @@ class Headtexts extends StatelessWidget {
 
               child: const Text("Pixora",
               style: TextStyle(
-                fontSize:55,
+                fontSize:40,
                 letterSpacing: 5,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -31,7 +31,7 @@ class Headtexts extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 5),
 
 
         ],

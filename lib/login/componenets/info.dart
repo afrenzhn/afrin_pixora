@@ -19,16 +19,14 @@ class Credential extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding (
-        padding: EdgeInsets.all(40),
+        padding: EdgeInsets.all(18),
       child: Column(
         children: [
           Center(
             child: CircleAvatar(
-              radius: 150,
+              radius: 100,
               backgroundImage: AssetImage(
                 "images/df2.png",
-
-
               ),
               backgroundColor: Colors.transparent,
 
@@ -43,14 +41,14 @@ class Credential extends StatelessWidget {
             textEditingController:_emailController,
 
           ),
-          SizedBox(height: 15,),
+          SizedBox(height: 5,),
           InputField(
           hintText: "Enter Password",
           icon: Icons.lock,
           obsecureText: true,
             textEditingController:_passController,
           ),
-          SizedBox(height: 15,),
+          SizedBox(height: 5,),
           Row(
            mainAxisAlignment: MainAxisAlignment.end,
 
@@ -64,11 +62,8 @@ class Credential extends StatelessWidget {
 
                   "Forget Password?",
                   style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 17,
+                    fontSize: 12,
                     color: Colors.black,
-
-
 
                   ),
                 ),
@@ -88,7 +83,7 @@ class Credential extends StatelessWidget {
                  password: _passController.text.trim(),
                 );
                 //login a dile homepage e jabe
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>Home_screen()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
               }
               //pubs yml e flutter toast add korsi
               catch(error){

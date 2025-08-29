@@ -19,7 +19,7 @@ class AccountCheck extends StatelessWidget {
         Text(
           login?"Don't have an Account? ":"Already have an Account?",
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 12,
             color: Colors.black54,
 
           ),
@@ -31,8 +31,8 @@ class AccountCheck extends StatelessWidget {
           child: Text(
             login?"Create an Account":"Log In",
             style: TextStyle(
-              fontSize: 16
-,
+              fontSize: 12,
+
             color: Colors.blue[900],
             fontWeight: FontWeight.bold),
           ),
@@ -40,9 +40,6 @@ class AccountCheck extends StatelessWidget {
 
 
       ],
-
-
-
 
 
 

@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-        home:FirebaseAuth.instance.currentUser==null?Loginscreen(): Home_screen(),
+        home:FirebaseAuth.instance.currentUser==null?Loginscreen(): HomeScreen(),
 
     );
 

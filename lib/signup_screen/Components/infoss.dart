@@ -117,7 +117,7 @@ String?imageUrl;
   Widget build(BuildContext context) {
 
     return  Padding(
-        padding: EdgeInsets.all(50),
+        padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -127,7 +127,7 @@ String?imageUrl;
               //create showimagedialog
             },
             child: CircleAvatar(
-              radius: 90,
+              radius: 80,
 
               backgroundImage: imageFile==null
               ?
@@ -136,7 +136,7 @@ String?imageUrl;
                   Image.file(imageFile!).image,
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 8,),
           InputField(
             hintText: "Enter Username",
             obsecureText: false,
@@ -206,7 +206,7 @@ String?imageUrl;
               } catch (error) {
                 Fluttertoast.showToast(msg: error.toString());
               }
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>Home_screen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
             },
           ),
 

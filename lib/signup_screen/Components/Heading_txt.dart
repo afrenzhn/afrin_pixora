@@ -14,10 +14,9 @@ class HeadingText extends StatelessWidget {
           Center(
             //2-pg, heading,text
             child: Container(
-
               child:  Text("Pixora",
                 style: TextStyle(
-                  fontSize:55,
+                  fontSize:35,
                   letterSpacing: 5,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -27,14 +26,14 @@ class HeadingText extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 5),
           Center(
             //2-pg, heading,text
             child: Container(
 
               child:  Text("Create Account",
                 style: TextStyle(
-                  fontSize:30,
+                  fontSize:25,
                   letterSpacing: 5,
                   color: Colors.black54,
                   fontWeight: FontWeight.bold,

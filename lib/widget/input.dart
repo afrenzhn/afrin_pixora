@@ -30,7 +30,7 @@ class InputField extends StatelessWidget {
           hintText: hintText,
           helperStyle: const TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: 15,
           ),
           prefixIcon: Icon(icon,color: Colors.black,size: 20,),
           border: OutlineInputBorder(

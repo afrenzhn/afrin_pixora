@@ -20,20 +20,20 @@ class Button extends StatelessWidget {
     return GestureDetector(
     onTap: press,
       child: Padding(
-          padding: EdgeInsets.only(top: 6,bottom: 6),
+          padding: EdgeInsets.only(top: 10,bottom: 10),
         child: Container(
-          width:200,
+          width:150,
           height: 50,
 
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(18),
               color: Colors.orange[700],
               ),
           child: Center(
             child: Text(
               text,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 15,
                 color: Colors.white,
                 fontWeight: FontWeight.w800,
               ),
