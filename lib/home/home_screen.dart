@@ -37,11 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void readUserInfo() async {
     FirebaseFirestore.instance
-        .collection("users")
+        .collection("user")
         .doc(_auth.currentUser!.uid)
         .get()
         .then((snapshot) {
-      myImage = snapshot.get("user Image");
+      myImage = snapshot.get("userImage");
       myName = snapshot.get("name");
       setState(() {});
     });

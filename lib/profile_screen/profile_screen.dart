@@ -7,6 +7,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pixora/home/home_screen.dart';
 import 'package:pixora/login/loginscreen.dart';
+import 'package:firebase_storage/firebase_storage.dart'as  fStorage;
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -20,7 +21,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? image='';
   String?phoneNo='';
   File? imageXFile;
-
+  String? userNameInput;
+  String?userImageUrl;
   Future _getDataFromDatabase() async{
     await FirebaseFirestore.instance.collection("user")
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -30,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             setState(() {
               name=Snapshot.data()!['name'];
               email=Snapshot.data()!['email'];
-             image= Snapshot.data()!['userImage'];
+              image= Snapshot.data()!['userImage'];
               phoneNo=Snapshot.data()!['phoneNumber'];
             });
           }
@@ -122,11 +124,135 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if(croppedImage!=null){
       setState(() {
         imageXFile=File(croppedImage.path);
+        _updateImageFirestore();
       });
     }
   }
+  Future _updateUserName()async{
+
+    await FirebaseFirestore.instance.collection("user")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update(
+        {
+          "name": userNameInput,
 
 
+        });
+
+  }
+
+  _displayTextInputDialog(BuildContext)async{
+    return showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text(
+            "Update Your Name Here"),
+          content: TextField(
+            onChanged: (value){
+              setState(() {
+                userNameInput=value;
+              });
+          },
+            decoration: InputDecoration(
+                hintText: "Type Here"
+            ),
+
+          ),
+          actions: [
+            ElevatedButton(
+              child: Text("Cancel",
+              style: TextStyle(
+                color: Colors.deepOrange
+              ),),
+              onPressed: (){
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orangeAccent
+              ),
+            ),
+            ElevatedButton(
+              child: Text("Save",
+                style: TextStyle(
+                    color: Colors.deepOrange
+                ),),
+              onPressed: (){
+              _updateUserName();
+              updateProfileNameOnUserExistingPosts();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red
+              ),
+            ),
+          ],
+          );
+
+      }
+    );
+  }
+void _updateImageFirestore()async{
+    String fileName=DateTime.now().microsecondsSinceEpoch.toString();
+    fStorage.Reference reference =fStorage.FirebaseStorage.instance.ref()
+    .child("userImages").child(fileName);
+    fStorage.UploadTask uploadTask = reference.putFile(File(imageXFile!.path));
+    fStorage.TaskSnapshot taskSnapshot = await uploadTask.whenComplete((){});
+    await taskSnapshot.ref.getDownloadURL().then((url)async{
+      userImageUrl=url;
+    });
+    await FirebaseFirestore.instance.collection("user")
+    .doc(FirebaseAuth.instance.currentUser!.uid)
+    .update({
+      "userImages":userImageUrl,
+    });
+
+}
+updateProfileImageOnUserExistingPosts()async {
+  await FirebaseFirestore.instance.collection("wallpaper")
+      .where("id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .get()
+      .then((snapshot) {
+    for (int index = 0; index < snapshot.docs.length; index++) {
+      String userProfileImageInPost = snapshot.docs[index]['userImage'];
+
+      if (userProfileImageInPost != userImageUrl) {
+        FirebaseFirestore.instance.collection("wallpaper")
+            .doc(snapshot.docs[index].id)
+            .update(
+            {
+              "userImage": userImageUrl,
+            }
+        );
+      }
+    }
+  });
+}
+    updateProfileNameOnUserExistingPosts()async{
+      await FirebaseFirestore.instance.collection("wallpaper")
+          .where("id",isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((snapshot)
+      {
+        for(int index =0 ;index<snapshot.docs.length;index++){
+          String userProfileNameInPost=snapshot.docs[index]['Name'];
+
+          if(userProfileNameInPost != userNameInput){
+            FirebaseFirestore.instance.collection("wallpaper")
+                .doc(snapshot.docs[index].id)
+                .update(
+                {
+                  "Name":userNameInput,
+                }
+            );
+          }
+        }
+      });
+
+
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,46 +313,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
              ),
            ),
            SizedBox(height: 10,),
-           Row(
-             crossAxisAlignment: CrossAxisAlignment.center,
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: [
-             Text(
-               'Name: '+name!,
-               style: TextStyle(
-                 fontSize: 25,
-                 fontWeight: FontWeight.bold,
-                 color: Colors.black,
+           Card(
+             elevation: 3,
+             shape: RoundedRectangleBorder(
+                 borderRadius: BorderRadius.circular(15)),
+             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+             child: ListTile(
+               leading: CircleAvatar(
+                 backgroundColor: Colors.orange[100],
+                 child: Icon(Icons.person, color: Colors.deepOrange),
+               ),
+               title: Text(
+                 name ?? "No Name",
+                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+               ),
+               subtitle: Text("Name"),
+               trailing: IconButton(
+                 icon: Icon(Icons.edit, color: Colors.deepOrange),
+                 onPressed: () {
+                   _displayTextInputDialog(context);
+                 },
                ),
              ),
-             IconButton(
-                 onPressed: (){
-                   //displaytextinput
-                 },
-                 icon: Icon(Icons.edit),
-             )
-           ],
            ),
-           SizedBox(height: 10,),
-           Text(
-             'Email: '+email!,
-             style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-               color: Colors.black,
 
+           // Email Card
+           Card(
+             elevation: 3,
+             shape: RoundedRectangleBorder(
+                 borderRadius: BorderRadius.circular(15)),
+             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+             child: ListTile(
+               leading: CircleAvatar(
+                 backgroundColor: Colors.orange[100],
+                 child: Icon(Icons.email, color: Colors.deepOrange),
+               ),
+               title: Text(
+                 email ?? "No Email",
+                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+               ),
+               subtitle: Text("Email"),
+             ),
+           ),
+
+           // Phone Number Card
+           Card(
+             elevation: 3,
+             shape: RoundedRectangleBorder(
+                 borderRadius: BorderRadius.circular(15)),
+             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+             child: ListTile(
+               leading: CircleAvatar(
+                 backgroundColor: Colors.orange[100],
+                 child: Icon(Icons.phone, color: Colors.deepOrange),
+               ),
+               title: Text(
+                 phoneNo ?? "No Phone Number",
+                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+               ),
+               subtitle: Text("Phone Number"),
              ),
            ),
            SizedBox(height: 10,),
-           Text(
-             'Phone Number: '+phoneNo!,
-             style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-               color: Colors.black,
 
-             ),
-           ),
            SizedBox(height: 20,),
            ElevatedButton(
                onPressed: (){
