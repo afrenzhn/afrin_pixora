@@ -23,6 +23,7 @@ class User{
     email=json["email"];
     name=json["name"];
     userImage=json["userImage"];
+    createAt=json["createdAt"];
     id=json["id"];
 
   }

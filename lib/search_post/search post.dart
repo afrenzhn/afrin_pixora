@@ -70,8 +70,12 @@ class _SearchPostState extends State<SearchPost> {
            ListView.builder(
              itemCount: snapshot.data!.docs.length,
              itemBuilder: (context, index) {
-               final doc = snapshot.data!.docs[index];
-               final model = User.fromJson(doc.data() as Map<String, dynamic>);
+               User model =User.fromJson(
+                 snapshot.data!.docs[index].data()! as Map<String,dynamic>
+
+               );
+
+
                return UsersDesign(
                  model: model,
                  context: context,

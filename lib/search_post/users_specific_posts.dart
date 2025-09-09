@@ -60,20 +60,13 @@ class _UsersSpecificPostsScreenState extends State<UsersSpecificPostsScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => OwnerDetails(
-                        img: img,
-                        userImg: userImg,
-                        name: name,
-                        date: date,
-                        docId: docId,
-                        userId: userId,
-                        downloads: downloads,
-                      ),
+                      builder: (_) => OwnerDetails(),
                     ),
                   );
                 },
-                child: Expanded(child: Image.network(img, fit: BoxFit.cover)),
+                child: Image.network(img, fit: BoxFit.cover),
               ),
+
               const SizedBox(height: 10),
               Row(
                 children: [

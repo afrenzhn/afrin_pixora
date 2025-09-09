@@ -47,7 +47,7 @@ final TextEditingController _emailTextController=TextEditingController(text: "")
              press: () async {
                try{
                  await _auth.sendPasswordResetEmail(
-                 email: '_emailTextController.text'
+                 email: _emailTextController.text
                  );
                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                    backgroundColor: Colors.orange,
