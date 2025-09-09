@@ -163,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ElevatedButton(
               child: Text("Cancel",
               style: TextStyle(
-                color: Colors.deepOrange
+                color: Colors.white,
               ),),
               onPressed: (){
                 setState(() {
@@ -171,13 +171,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orangeAccent
+                backgroundColor: Colors.orange[200]
               ),
             ),
             ElevatedButton(
               child: Text("Save",
                 style: TextStyle(
-                    color: Colors.deepOrange
+                    color: Colors.white,
                 ),),
               onPressed: (){
               _updateUserName();
@@ -185,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
               },
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red
+                  backgroundColor: Colors.orange[200],
               ),
             ),
           ],

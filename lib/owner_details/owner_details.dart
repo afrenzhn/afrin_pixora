@@ -87,7 +87,7 @@ class _OwnerDetailsState extends State<OwnerDetails> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height:30),

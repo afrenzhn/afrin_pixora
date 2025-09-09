@@ -26,7 +26,7 @@ class Credential extends StatelessWidget {
             child: CircleAvatar(
               radius: 100,
               backgroundImage: AssetImage(
-                "images/df2.png",
+                "images/icon.png",
               ),
               backgroundColor: Colors.transparent,
 
